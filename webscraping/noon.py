@@ -102,8 +102,8 @@ def get_product_details(product_keyword, pages_to_scrape=1):
                         "discount": discount,
                         "brand": extra_info.get("brand"),
                         "seller": extra_info.get("seller"),
-                        "rating": ranting_star.text.strip() if ranting_star else "N/A",
-                        "total reviwes": extra_info.get("rating_numbers"),
+                        
+                        "total_reviews": extra_info.get("rating_numbers"),
                         "url": product_link,
                         "time_scraped": time_scraped,
                         "page_number": page
