@@ -11,7 +11,7 @@ def clean_product_name(name):
     if pd.isna(name):
         return None
     name = name.lower()
-    name = re.sub(r'[^a-z0-9 ]', '', name)  # Allow spaces
+    name = re.sub(r'[^a-z0-9 ]', '', name) 
     name = re.sub(r'\s+', ' ', name).strip()
     return name
 
@@ -64,7 +64,7 @@ def clean_files():
                 df['discount'] = df['discount'].apply(clean_discount)
 
             df.to_excel(os.path.join(CLEANED_FOLDER, filename), index=False)
-            print(f"✅ Cleaned: {filename}")
+            print(f"Cleaned: {filename}")
 
 if __name__ == "__main__":
     clean_files()
