@@ -9,7 +9,7 @@ os.makedirs(COMBINED_FOLDER, exist_ok=True)
 def extract_datetime(filename):
     basename = os.path.basename(filename).replace(".xlsx", "")
     parts = basename.split("_")
-    datetime_str = f"{parts[-2]}_{parts[-1]}"  # Combines date and time parts
+    datetime_str = f"{parts[-2]}_{parts[-1]}"  
     return datetime.strptime(datetime_str, "%Y-%m-%d_%H-%M")
 
 def combine_files():
@@ -19,7 +19,7 @@ def combine_files():
         if filename.endswith(".xlsx"):
             parts = filename.split("_")
             source = parts[0].lower()
-            product = '_'.join(parts[1:-2])  # Gets product name without date/time
+            product = '_'.join(parts[1:-2])  
             filepath = os.path.join(RAW_FOLDER, filename)
             
             if product not in product_files:
