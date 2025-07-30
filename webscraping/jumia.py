@@ -14,7 +14,7 @@ import re
 
 MAX_PAGES_TO_SCRAPE = 1 
 
-# Configure Chrome options
+
 options = Options()
 options.add_argument("--disable-blink-features=AutomationControlled")
 options.add_experimental_option("excludeSwitches", ["enable-automation"])
@@ -35,10 +35,10 @@ def safe_filename(name):
 
 def handle_privacy_page():
     try:
-        # Check if we're on the privacy page
+       
         if "sp-privacy" in driver.current_url:
             print("Detected privacy page, attempting to bypass...")
-            # Try to find and click the "Continue Shopping" button
+            
             continue_button = wait.until(EC.element_to_be_clickable(
                 (By.CSS_SELECTOR, "button.btn._prim.-fw._md")
             ))
@@ -56,10 +56,10 @@ def extra_data(url):
         driver.switch_to.window(driver.window_handles[1])
         driver.get(url)
         
-        # Handle privacy page if it appears
+       
         handle_privacy_page()
         
-        # Additional check after potential redirect
+       
         if "sp-privacy" in driver.current_url:
             print("Still on privacy page after attempt, skipping this product")
             return details
@@ -69,8 +69,7 @@ def extra_data(url):
             time.sleep(1)
 
         soup = BeautifulSoup(driver.page_source, 'html.parser')
-        
-        # Get brand - improved extraction from div with class -pvxs
+       
         brand_div = soup.find('div', class_='-pvxs')
         if brand_div:
             brand_link = brand_div.find('a', class_='_more')
@@ -79,12 +78,12 @@ def extra_data(url):
                 if "privacy" not in brand_text.lower() and "cookie" not in brand_text.lower():
                     details["brand"] = brand_text
         
-        # Get seller - multiple possible selectors
+       
         seller = soup.find('p', class_='-m -pbs') or soup.find('span', class_='-m -pbs')
         if seller:
             details["seller"] = seller.text.strip()
         
-        # Get rating numbers
+        
         rating_numbers = soup.find('a', class_='-plxs _more')
         if rating_numbers:
             details["rating_numbers"] = rating_numbers.text.strip()
@@ -106,7 +105,7 @@ def get_product_details_jumia(product_keyword):
     url = f"https://www.jumia.com.eg/catalog/?q={product_keyword.replace(' ', '+')}"
     driver.get(url)
     
-    # Handle initial privacy page if it appears
+    
     handle_privacy_page()
     
     page = 1
